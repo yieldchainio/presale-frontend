@@ -5,6 +5,21 @@ body, html {
   color: white;
 }
 
+body::-webkit-scrollbar-thumb {
+  background-color: hsl(0, 0%, 25%);
+  border-radius: 0.1em;
+}
+
+body::-webkit-scrollbar-track {
+  background: hsl(0, 0%, 9%);
+  box-shadow: 0 0 5px hsl(0, 0%, 9%);
+  border-radius: 0.2em 0 0 0.2em;
+}
+body::-webkit-scrollbar {
+  width: 0.5em;
+  max-height: 10px;
+}
+
 .bg {
   /* The image used */
   z-index: -1;
@@ -100,6 +115,10 @@ body, html {
   margin-top: 1em;
 }
 
+.presale-container .presale-balance {
+  margin: 0.5em;
+}
+
 
 .presale-container input, .presale-container select {
   background: black;
@@ -135,11 +154,7 @@ body, html {
 }
 
 .presale-container .running {
-  background-image: url('./images/loading_icon.gif') !important;
-  background-repeat: no-repeat !important;
-  background-size: contain !important;
-  background-color: grey !important;
-
+  background: grey !important;
 }
 
 .presale-container .presale-output .presale-output-amount {
@@ -172,7 +187,7 @@ body, html {
 .title {
   background-image: url('./images/title.png');
   height: 200px;
-  margin-bottom: 1em;
+  margin-bottom: 3em;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center; 
@@ -204,3 +219,7 @@ hr {
 .show {
   display: block !important;
 }
+
+/*
+
+*/

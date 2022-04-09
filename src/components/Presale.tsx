@@ -20,6 +20,8 @@ const Presale = () => {
     const [allowance, setAllowance] = useState(0);
     const [txRunning, setTxRunning] = useState(false);
     const [saleOpen, setSaleOpen] = useState(false);
+    const [balance, setBalance] = useState(0);
+    const [contribution, setContribution] = useState(0);
     
     const handleChange = (value:string) => {
         if (value === "") {
@@ -93,7 +95,11 @@ const Presale = () => {
             const tc:ERC20 = ERC20__factory.connect(token, provider!.getSigner())
             setTokenContract(tc);
 
+            tc.balanceOf(address).then((v) => {setBalance(parseFloat(ethers.utils.formatEther(v)))})
+
             presaleContract.isOpen().then((value) => {console.log(value); setSaleOpen(value)});
+
+            presaleContract.contributions(address).then((v) => {setContribution(parseFloat(ethers.utils.formatEther(v)))})
         }
     }, [token, presaleContract, provider])
 
@@ -132,6 +138,7 @@ const Presale = () => {
                                
                             </select>
                             </span></span>
+                            <div className="presale-balance">Balance: ${balance.toLocaleString()}</div>
                         </div>
                         <div className="presale-amount">
                             <h3>Amount to contribute</h3>
@@ -140,13 +147,14 @@ const Presale = () => {
 
                         <div className="presale-output">
                             <h3>You will get</h3>
-                            <div className="presale-output-amount">{(amount / 0.03).toFixed(2)}</div>
+                            <div className="presale-output-amount">{(amount / 0.03).toFixed(2)} YC</div>
                         </div>
                         <div className="presale-proceeed">
                             { saleOpen ?
                                 <button className={txRunning ? "running" : ""} onClick={() => contribute()} disabled={txRunning}>Contribute</button>:""
                             }
                         </div>
+                        <div>Your contribution: ${contribution.toLocaleString()}</div>
                     </div>
                 }
         </div>
