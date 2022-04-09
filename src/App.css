@@ -148,26 +148,32 @@ body::-webkit-scrollbar {
 .presale-container button {
     padding: 0.8em 1em;
     background: linear-gradient(
-        90deg,
+        75deg,
         rgba(42, 199, 237, 1) 0%,
         rgba(19, 93, 195, 1) 36%,
         rgba(190, 227, 99, 1) 100%
     );
     border: none;
-    border-radius: 15px;
-    color: white;
+    border-radius: 0.6em;
+    color: black;
+    letter-spacing: 0.03em;
     font-size: 1.5em;
     font-weight: bold;
     cursor: pointer;
+
+    transition: outline 0.4s ease-in-out, color 0.4s ease-in-out,
+        filter 0.4s ease-in-out, transform 0.1s ease-in-out;
+    outline: solid hsla(0, 0%, 100%, 0);
 }
 
 .presale-container button:hover {
-    background: linear-gradient(
-        90deg,
-        rgba(190, 227, 99, 1) 0%,
-        rgba(19, 93, 195, 1) 36%,
-        rgba(42, 199, 237, 1) 100%
-    );
+    outline: solid white;
+    color: white;
+    filter: drop-shadow(0 0 0.2rem white);
+}
+
+.presale-container button:active {
+    transform: scale(0.85);
 }
 
 .presale-container .running {
