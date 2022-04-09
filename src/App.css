@@ -83,6 +83,7 @@ body::-webkit-scrollbar {
 }
 
 .wallet-container button {
+    cursor: pointer;
     font-size: 1em;
     color: white;
     padding: 10px;
@@ -253,11 +254,11 @@ hr {
     padding: 3px;
     background-color: rgb(42, 199, 237);
     background-image: var(--main-gradient);
-    border-radius: 15px;
+    border-radius: 0.8rem;
 }
 
 .border-inner {
-    border-radius: 15px;
+    border-radius: 0.8rem;
     border: none;
     background: black;
 }
