@@ -176,7 +176,8 @@ const Presale = () => {
                                         </span>
                                     </span>
                                     <div className="presale-balance">
-                                        Balance: ${balance.toLocaleString()}
+                                        Available:{" "}
+                                        <span>{balance.toLocaleString()}</span>
                                     </div>
                                 </div>
                                 <div className="presale-amount">
@@ -198,7 +199,10 @@ const Presale = () => {
                                 <div className="presale-output">
                                     <h3>You will get</h3>
                                     <div className="presale-output-amount">
-                                        {(amount / 0.03).toFixed(2)} YC
+                                        <span>
+                                            {(amount / 0.03).toFixed(2)}
+                                        </span>{" "}
+                                        YC
                                     </div>
                                 </div>
                                 <div className="presale-proceeed">
