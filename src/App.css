@@ -43,8 +43,8 @@ body, html {
 
 .wallet-container .chain {
   display: inline-block;
-  font-size: 1.5em;
-  padding: 3px;
+  font-size: 1.2em;
+  padding: 10px;
 }
 
 .wallet-container button {
@@ -154,6 +154,21 @@ body, html {
   font-weight: bold;
 }
 
+.raised-container .raised-details-title {
+  padding: 5px;
+  font-weight: normal;
+  font-size: 0.9em;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.raised-container .raised-details {
+  display: none;
+  font-size: 0.8em;
+  font-weight: normal;
+  padding: 5px;
+}
+
 .title {
   background-image: url('./images/title.png');
   height: 200px;
@@ -184,4 +199,8 @@ hr {
 
 .text-center {
   text-align: center;
+}
+
+.show {
+  display: block !important;
 }

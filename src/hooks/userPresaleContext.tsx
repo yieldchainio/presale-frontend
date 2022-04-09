@@ -2,6 +2,7 @@ import { Contract, ethers } from "ethers";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { ChainID, CHAINS, Contracts, RpcUrls } from "../constants" ;
 import { Presale__factory } from "../typechain/factories/Presale__factory";
+import useTimeout from "./useTimeout"
 
 
 export type PresaleInfo = {
@@ -47,6 +48,7 @@ export const PresaleContextProvider = ({ children }: Props) => {
     const [hardCap, setHardCap] = useState(30000);
     const [reloadCnt, setReload] = useState(0);
 
+
     const reload = () => {
         setReload(reloadCnt+1);
     }
@@ -81,7 +83,7 @@ export const PresaleContextProvider = ({ children }: Props) => {
         loadInfo()
     }, [reloadCnt])
     
-
+    useTimeout(loadInfo, 10000)
     
 
     const presaleInfo = useMemo(() => ({

@@ -9,6 +9,7 @@ import { Presale } from "../typechain/Presale";
 const Raised = () => {
     const {connected, chainId, provider} = useWeb3Context();
     const {raised, raisedPerChain, hardCap} = usePresaleContext();
+    const [showDetails, setShowDetails] = useState(false)
    // const [raised, setRaised] = useState(NaN);
 
     /*useEffect(() => {
@@ -24,10 +25,10 @@ const Raised = () => {
     return (
         <div className="raised-container">
             Total Raised: <br />
-            {raised.toLocaleString()} / ${TOTAL_RAISE.toLocaleString()}
-            <div>Details</div>
-            <div className="raised-details">
-                {raisedPerChain.map((v, i) => <div>{Networks[CHAINS[i]]} : {v}</div>)}
+            ${raised.toLocaleString()} / ${TOTAL_RAISE.toLocaleString()}
+            <div className="raised-details-title" onClick={(e) => { setShowDetails(!showDetails) }}>Details</div>
+            <div className={`raised-details ${showDetails ? "show":""}`}>
+                {raisedPerChain.map((v, i) => <div>{Networks[CHAINS[i]]} : ${v.toLocaleString()}</div>)}
             </div>
         </div>
     )
