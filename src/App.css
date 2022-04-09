@@ -1,0 +1,187 @@
+
+body, html {
+  height: 100%;
+  margin: 0;
+  color: white;
+}
+
+.bg {
+  /* The image used */
+  z-index: -1;
+  background-image: url('./images/Background.png');
+  position: fixed;
+  width: 100%;
+
+  /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.root {
+  display: flex;
+}
+
+.content {
+  z-index: 10;
+}
+.wallet-container {
+  display: flex;
+  text-align: right;
+
+  padding-right: 1em;
+  padding-top: 1em;
+}
+
+.wallet-container .wallet-info {
+  margin-left: auto;
+
+}
+
+.wallet-container .chain {
+  display: inline-block;
+  font-size: 1.5em;
+  padding: 3px;
+}
+
+.wallet-container button {
+
+  font-size: 1em;
+  color: white;
+  padding: 10px;
+
+  background-color: black;
+
+  
+}
+
+.wallet-container .button-wrapper {
+  display: inline-block;
+}
+
+
+
+.flex-box {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 2em;
+}
+
+.details-container {
+  right: 2em; 
+  text-align: center;
+
+
+}
+
+.details-container a {
+  color: white;
+}
+
+
+.presale-container {
+  
+  min-width: 600px;
+  text-align: center;
+  padding: 1em;
+}
+
+@media screen and (max-width: 500px) {
+  .presale-container {
+    min-width: 0;
+  }
+}
+
+.presale-container > * {
+  margin-top: 1em;
+}
+
+
+.presale-container input, .presale-container select {
+  background: black;
+  color: white;
+  border: none;
+  font-size: 1.5em;
+  margin: 5px;
+}
+
+.presale-container input:focus, .presale-container select:focus {
+  border: none;
+  outline: none;
+}
+
+.presale-container .inline {
+  display: inline-block;
+}
+
+.presale-container button {
+  padding: 1em;
+  background: linear-gradient(90deg, rgba(42,199,237,1) 0%, rgba(19,93,195,1) 36%, rgba(190,227,99,1) 100%);
+  border: none;
+  border-radius: 15px;
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.presale-container button:hover {
+  background: linear-gradient(90deg, rgba(190,227,99,1) 0%, rgba(19,93,195,1) 36%, rgba(42,199,237,1) 100%);
+
+}
+
+.presale-container .running {
+  background-image: url('./images/loading_icon.gif') !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  background-color: grey !important;
+
+}
+
+.presale-container .presale-output .presale-output-amount {
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+.raised-container {
+  margin: 2em auto;
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.title {
+  background-image: url('./images/title.png');
+  height: 200px;
+  margin-bottom: 1em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; 
+}
+
+hr {
+  background: linear-gradient(90deg, rgba(42,199,237,1) 0%, rgba(19,93,195,1) 36%, rgba(190,227,99,1) 100%);
+  height: 3px;
+  border: none;
+}
+
+.border-outer {
+  padding: 3px;
+  background-color: rgb(42,199,237);
+  background-image: linear-gradient(90deg, rgba(42,199,237,1) 0%, rgba(19,93,195,1) 36%, rgba(190,227,99,1) 100%);
+  border-radius: 15px;
+}
+
+.border-inner {
+  border-radius: 15px;
+  border: none;
+  background: black;
+}
+
+.text-center {
+  text-align: center;
+}
