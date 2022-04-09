@@ -137,6 +137,14 @@ body::-webkit-scrollbar {
     display: inline-block;
 }
 
+.presale-container .presale-balance {
+    opacity: 0.5;
+}
+
+.presale-container .presale-balance span {
+    font-weight: bold;
+}
+
 .presale-container button {
     padding: 0.8em 1em;
     background: linear-gradient(
@@ -169,6 +177,27 @@ body::-webkit-scrollbar {
 .presale-container .presale-output .presale-output-amount {
     font-size: 2em;
     margin-bottom: 1em;
+}
+
+.presale-container .presale-output span {
+    font-weight: bold;
+    position: relative;
+}
+
+.presale-container .presale-output span::after {
+    content: "";
+    position: absolute;
+    bottom: -11%;
+    left: 0;
+    background: linear-gradient(
+        45deg,
+        rgba(190, 227, 99, 1) 0%,
+        rgba(19, 93, 195, 1) 36%,
+        rgba(42, 199, 237, 1) 100%
+    );
+    border-radius: 1em;
+    height: 0.3rem;
+    width: 100%;
 }
 
 .raised-container {
