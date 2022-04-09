@@ -205,7 +205,7 @@ const Presale = () => {
                                         YC
                                     </div>
                                 </div>
-                                <div className="presale-proceeed">
+                                <div className="presale-proceed">
                                     {saleOpen ? (
                                         <button
                                             className={
