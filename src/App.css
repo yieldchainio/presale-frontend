@@ -241,8 +241,13 @@ body::-webkit-scrollbar {
     transform: scale(0.85);
 }
 
-.presale-container .running {
+.presale-container button.running {
     background: grey !important;
+    color: black;
+    transition: none;
+    outline: none;
+    filter: none;
+    cursor: progress;
 }
 
 .presale-container .presale-output .presale-output-amount {
@@ -368,11 +373,13 @@ body::-webkit-scrollbar {
 }
 
 .raised-details.show li a {
-    color: rgb(206, 206, 206);
+  color: var(--palette-white);
+  filter: brightness(0.8);
+  transition: filter 0.2s ease-in-out;
 }
 
 .raised-details.show li a:hover {
-  color: white;
+  filter: brightness(1);
 }
 
 .raised-details.show li *:last-child {

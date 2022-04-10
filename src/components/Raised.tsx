@@ -58,7 +58,7 @@ const Raised = () => {
             <div className={`raised-details ${showDetails ? "show" : ""}`}>
                 <ul>
                     {raisedPerChain.map((v, i) => (
-                        <li>
+                        <li key={`raised-${i}`}>
                             {/* EXPERIMENTAL - "Bars that represent the ratio of contributions from each chain */}
                             {/* May be better to just leave the small translucent lines instead*/}
                             <div

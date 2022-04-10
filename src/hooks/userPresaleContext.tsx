@@ -66,10 +66,8 @@ export const PresaleContextProvider = ({ children }: Props) => {
                 const _openPerChain = openPerChain
                 _openPerChain[i] = v
                 setOpenPerChain(_openPerChain)
-                setOpen(_openPerChain.reduce((x, y) => x == y))
-                console.log(_openPerChain.reduce((x, y) => x == y))
+                setOpen(_openPerChain.every((x) => x === true))
             });
-            //console.log("Chain ID: ", chain, " - open: ", isOpen)
             contract.contributed().then((_raised) => {
                 const _raisedPerChain = raisedPerChain
                 _raisedPerChain[i] = parseFloat(ethers.utils.formatEther(_raised));
