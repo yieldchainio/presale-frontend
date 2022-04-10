@@ -2,7 +2,7 @@ body,
 html {
     height: 100%;
     margin: 0;
-    color: white;
+    color: var(--palette-white);
 }
 
 body {
@@ -10,6 +10,8 @@ body {
     --palette-dark-blue: hsla(214, 95%, 43%, 1);
     --palette-yellow: hsla(53, 76%, 49%, 1);
     --palette-green: hsla(76, 60%, 61%, 1);
+    --palette-white: hsla(0, 0%, 94%, 1);
+    --palette-black: hsla(0, 0%, 5%, 1);
 
     --main-gradient: linear-gradient(
         75deg,
@@ -85,10 +87,10 @@ body::-webkit-scrollbar {
 .wallet-container button {
     cursor: pointer;
     font-size: 1em;
-    color: white;
+    color: var(--palette-white);
     padding: 10px;
 
-    background-color: black;
+    background-color: var(--palette-black);
 }
 
 .wallet-container .button-wrapper {
@@ -113,7 +115,7 @@ body::-webkit-scrollbar {
 }
 
 .details-container a {
-    color: white;
+    color: var(--palette-white);
 }
 
 .details-container ul {
@@ -142,7 +144,7 @@ body::-webkit-scrollbar {
     position: absolute;
     bottom: -13%;
     left: 0;
-    background: white;
+    background: var(--palette-white);
     height: 1px;
     width: 100%;
     opacity: 0.1;
@@ -153,8 +155,8 @@ body::-webkit-scrollbar {
     margin: 1rem 0 0.5rem 0;
 }
 
-hr.white-hr {
-    background: white;
+hr.var(--palette-white)-hr {
+    background: var(--palette-white);
     height: 3px;
     border: none;
 }
@@ -166,6 +168,7 @@ hr.white-hr {
 
 .presale-container .presale-tokens select {
     font-size: 1.3rem;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 500px) {
@@ -184,8 +187,8 @@ hr.white-hr {
 
 .presale-container input,
 .presale-container select {
-    background: black;
-    color: white;
+    background: var(--palette-black);
+    color: var(--palette-white);
     border: none;
     font-size: 1.5em;
     margin: 0.5em;
@@ -214,7 +217,7 @@ hr.white-hr {
     background: var(--main-gradient);
     border: none;
     border-radius: 0.6em;
-    color: black;
+    color: var(--palette-black);
     letter-spacing: 0.03em;
     font-size: 1.5em;
     font-weight: bold;
@@ -226,9 +229,9 @@ hr.white-hr {
 }
 
 .presale-container button:hover {
-    outline: solid white;
-    color: white;
-    filter: drop-shadow(0 0 0.2rem white);
+    outline: solid var(--palette-white);
+    color: var(--palette-white);
+    filter: drop-shadow(0 0 0.2rem var(--palette-white));
 }
 
 .presale-container button:active {
@@ -307,7 +310,7 @@ hr {
 .border-inner {
     border-radius: 0.8rem;
     border: none;
-    background: black;
+    background: var(--palette-black);
 }
 
 .text-center {
