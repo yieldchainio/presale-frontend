@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import { CHAINS, Contracts, Networks, TOTAL_RAISE } from "../constants";
+import { CHAINS, Contracts, Explorers, Networks, TOTAL_RAISE } from "../constants";
 import { usePresaleContext } from "../hooks/userPresaleContext";
 import { useWeb3Context } from "../hooks/useWeb3Context";
 import { Presale__factory } from "../typechain/factories/Presale__factory";
@@ -68,7 +68,7 @@ const Raised = () => {
                                 }}
                             ></div>
                             <span>${v.toLocaleString() + " "}</span>
-                            <span>{Networks[CHAINS[i]]}</span>
+                            <a href={`${Explorers[CHAINS[i]]}address/${Contracts[CHAINS[i]].PRESALE}`} target="_blank">{Networks[CHAINS[i]]}</a>
                         </li>
                     ))}
                 </ul>

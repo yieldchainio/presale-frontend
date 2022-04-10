@@ -79,4 +79,11 @@ export const Networks:IRpcUrls = {
     [ChainID.FTM_TESTNET] : "FTM Testnet",
 }
 
+export const Explorers:IRpcUrls = {
+    [ChainID.BSC_TESTNET] : "http://testnet.bscscan.com/",
+    [ChainID.POLY_TESTNET] : "https://mumbai.polygonscan.com/",
+    [ChainID.AVAX_TESTNET] : "https://testnet.snowtrace.io/",
+    [ChainID.FTM_TESTNET] : "https://testnet.ftmscan.com/",
+}
+
 export const DEFAULT_CHAIN = ChainID.BSC_TESTNET;

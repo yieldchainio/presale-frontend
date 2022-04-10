@@ -367,6 +367,14 @@ body::-webkit-scrollbar {
     font-weight: bold;
 }
 
+.raised-details.show li a {
+    color: rgb(206, 206, 206);
+}
+
+.raised-details.show li a:hover {
+  color: white;
+}
+
 .raised-details.show li *:last-child {
     text-align: right;
     font-weight: normal;

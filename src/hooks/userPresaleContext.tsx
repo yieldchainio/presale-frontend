@@ -2,7 +2,7 @@ import { Contract, ethers } from "ethers";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { ChainID, CHAINS, Contracts, RpcUrls } from "../constants" ;
 import { Presale__factory } from "../typechain/factories/Presale__factory";
-import useTimeout from "./useTimeout"
+import useInterval from "./useInterval"
 
 
 export type PresaleInfo = {
@@ -42,9 +42,10 @@ interface Props {
 
 
 export const PresaleContextProvider = ({ children }: Props) => {
-    const [open, setOpen] = useState<boolean | null>(true);
+    const [open, setOpen] = useState(false);
+    const [openPerChain, setOpenPerChain] = useState<boolean[]>(new Array(CHAINS.length).fill(false));
     const [raised, setRaised] = useState(NaN);
-    const [raisedPerChain, setRaisedPerChain] = useState<number[]>(new Array(CHAINS.length).fill(0))
+    const [raisedPerChain, setRaisedPerChain] = useState<number[]>(new Array(CHAINS.length).fill(0));
     const [hardCap, setHardCap] = useState(30000);
     const [reloadCnt, setReload] = useState(0);
 
@@ -61,30 +62,31 @@ export const PresaleContextProvider = ({ children }: Props) => {
             const chain = CHAINS[i]
             const provider = new ethers.providers.JsonRpcProvider(RpcUrls[chain])
             const contract = Presale__factory.connect(Contracts[chain].PRESALE, provider)
-            contract.isOpen().then((v) => setOpen(open == v));
+            contract.isOpen().then((v) => {
+                const _openPerChain = openPerChain
+                _openPerChain[i] = v
+                setOpenPerChain(_openPerChain)
+                setOpen(_openPerChain.reduce((x, y) => x == y))
+                console.log(_openPerChain.reduce((x, y) => x == y))
+            });
             //console.log("Chain ID: ", chain, " - open: ", isOpen)
             contract.contributed().then((_raised) => {
                 const _raisedPerChain = raisedPerChain
                 _raisedPerChain[i] = parseFloat(ethers.utils.formatEther(_raised));
                 setRaisedPerChain(_raisedPerChain)
                 setRaised(_raisedPerChain.reduce((x, y) => y+x))
-                console.log(JSON.stringify(raisedPerChain))
             });
             
         }
         setHardCap(capSynced);
-        if (open === null) {
-            setOpen(true)
-        }
-
     }
 
     useEffect(() => {
         loadInfo()
     }, [reloadCnt])
     
-    useTimeout(loadInfo, 10000)
-    
+    useInterval(loadInfo, 7000)
+   
 
     const presaleInfo = useMemo(() => ({
         raised,

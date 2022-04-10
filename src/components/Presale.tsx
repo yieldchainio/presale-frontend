@@ -19,7 +19,6 @@ const Presale = () => {
     const [approved, setApproved] = useState(false);
     const [allowance, setAllowance] = useState(0);
     const [txRunning, setTxRunning] = useState(false);
-    const [saleOpen, setSaleOpen] = useState(false);
     const [balance, setBalance] = useState(0);
     const [contribution, setContribution] = useState(0);
 
@@ -120,11 +119,6 @@ const Presale = () => {
                 setBalance(parseFloat(ethers.utils.formatEther(v)));
             });
 
-            presaleContract.isOpen().then((value) => {
-                console.log(value);
-                setSaleOpen(value);
-            });
-
             presaleContract.contributions(address).then((v) => {
                 setContribution(parseFloat(ethers.utils.formatEther(v)));
             });
@@ -150,7 +144,7 @@ const Presale = () => {
                             ) : (
                                 <div>Connect your wallet</div>
                             )
-                        ) : !saleOpen || !open ? (
+                        ) : !open ? (
                             <div>Presale is closed</div>
                         ) : (
                             <div>
@@ -211,7 +205,7 @@ const Presale = () => {
                                     </div>
                                 </div>
                                 <div className="presale-proceed">
-                                    {saleOpen ? (
+                                    {open ? (
                                         <button
                                             className={
                                                 txRunning ? "running" : ""
