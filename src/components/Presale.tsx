@@ -10,47 +10,59 @@ import { usePresaleContext } from "../hooks/userPresaleContext";
 import Raised from "./Raised";
 
 const Presale = () => {
-    const {chainId, provider, connected, address} = useWeb3Context()
+    const { chainId, provider, connected, address } = useWeb3Context();
     const { open, reload } = usePresaleContext();
     const [amount, setAmount] = useState<number>(0);
     const [token, setToken] = useState<string>("");
     const [presaleContract, setPresaleContract] = useState<TPresale>();
     const [tokenContract, setTokenContract] = useState<ERC20>();
-    const [approved, setApproved] = useState(false)
+    const [approved, setApproved] = useState(false);
     const [allowance, setAllowance] = useState(0);
     const [txRunning, setTxRunning] = useState(false);
     const [saleOpen, setSaleOpen] = useState(false);
     const [balance, setBalance] = useState(0);
     const [contribution, setContribution] = useState(0);
-    
-    const handleChange = (value:string) => {
+
+    const handleChange = (value: string) => {
         if (value === "") {
-            value = "0"
+            value = "0";
         }
-        setAmount(parseFloat(value))
-    }
+        setAmount(parseFloat(value));
+    };
 
     const getAllowance = () => {
-        if (tokenContract !== undefined && presaleContract !== undefined && provider !== null) {
-            tokenContract!.allowance(address, presaleContract!.address).then((value) => {setAllowance(parseFloat(ethers.utils.formatEther(value))); setApproved(value.gt(0))})
+        if (
+            tokenContract !== undefined &&
+            presaleContract !== undefined &&
+            provider !== null
+        ) {
+            tokenContract!
+                .allowance(address, presaleContract!.address)
+                .then((value) => {
+                    setAllowance(parseFloat(ethers.utils.formatEther(value)));
+                    setApproved(value.gt(0));
+                });
         }
-    }
+    };
 
-    const approve = async (extra?:number) => {
+    const approve = async (extra?: number) => {
         setTxRunning(true);
-        if(token !== "" && amount > 0) {
+        if (token !== "" && amount > 0) {
             let toApprove = amount;
-            if(extra) toApprove += extra; 
+            if (extra) toApprove += extra;
             try {
-                const tx = await tokenContract!.approve(Contracts[chainId!].PRESALE, ethers.utils.parseEther(toApprove.toString()))
-                await tx.wait(); 
+                const tx = await tokenContract!.approve(
+                    Contracts[chainId!].PRESALE,
+                    ethers.utils.parseEther(toApprove.toString())
+                );
+                await tx.wait();
                 getAllowance();
             } catch (e) {
-                console.log(e)
+                console.log(e);
             }
-            setTxRunning(false)
+            setTxRunning(false);
         }
-    }
+    };
 
     const contribute = async () => {
         if (presaleContract !== undefined && provider !== null) {
@@ -59,111 +71,172 @@ const Presale = () => {
                 return;
             }
             if (allowance < amount) {
-                await approve()
+                await approve();
             }
-            
-            setTxRunning(true)
-            console.log(ethers.utils.parseEther(amount.toString()))
-            presaleContract!.contribute(token, ethers.utils.parseEther(amount.toString())).then((tx) => {
-                tx.wait().then((receipt) => {
-                    if(receipt.status == 1) {
-                        console.log("contributed")
-                        console.log(receipt.logs[0])
-                        reload()
-                        getAllowance();
-                    }
-                    setTxRunning(false);
-                })
-            }).catch(() => setTxRunning(false))
 
+            setTxRunning(true);
+            console.log(ethers.utils.parseEther(amount.toString()));
+            presaleContract!
+                .contribute(token, ethers.utils.parseEther(amount.toString()))
+                .then((tx) => {
+                    tx.wait().then((receipt) => {
+                        if (receipt.status == 1) {
+                            console.log("contributed");
+                            console.log(receipt.logs[0]);
+                            reload();
+                            getAllowance();
+                        }
+                        setTxRunning(false);
+                    });
+                })
+                .catch(() => setTxRunning(false));
         }
-    }
+    };
 
     useEffect(() => {
         if (token == "" && chainId && Contracts[chainId!]) {
-            setToken(Contracts[chainId!].USDT)
+            setToken(Contracts[chainId!].USDT);
         }
 
         if (provider !== null && chainId && Contracts[chainId!]) {
-            setPresaleContract(Presale__factory.connect(Contracts[chainId!].PRESALE, provider!.getSigner()))
+            setPresaleContract(
+                Presale__factory.connect(
+                    Contracts[chainId!].PRESALE,
+                    provider!.getSigner()
+                )
+            );
         }
-
-    }, [chainId, provider, connected])
+    }, [chainId, provider, connected]);
 
     useEffect(() => {
         if (provider !== null && presaleContract !== undefined) {
-            const tc:ERC20 = ERC20__factory.connect(token, provider!.getSigner())
+            const tc: ERC20 = ERC20__factory.connect(
+                token,
+                provider!.getSigner()
+            );
             setTokenContract(tc);
 
-            tc.balanceOf(address).then((v) => {setBalance(parseFloat(ethers.utils.formatEther(v)))})
+            tc.balanceOf(address).then((v) => {
+                setBalance(parseFloat(ethers.utils.formatEther(v)));
+            });
 
-            presaleContract.isOpen().then((value) => {console.log(value); setSaleOpen(value)});
+            presaleContract.isOpen().then((value) => {
+                console.log(value);
+                setSaleOpen(value);
+            });
 
-            presaleContract.contributions(address).then((v) => {setContribution(parseFloat(ethers.utils.formatEther(v)))})
+            presaleContract.contributions(address).then((v) => {
+                setContribution(parseFloat(ethers.utils.formatEther(v)));
+            });
         }
-    }, [token, presaleContract, provider])
+    }, [token, presaleContract, provider]);
 
     useEffect(() => {
         getAllowance();
-        console.log(token)
-    }, [tokenContract])
+        console.log(token);
+    }, [tokenContract]);
 
     useEffect(() => {
-        console.log(allowance)
-    }, [allowance])
+        console.log(allowance);
+    }, [allowance]);
     return (
         <div>
-        <div className="border-outer">
-        <div className="border-inner">
-        <div className="presale-container">
-            {
-                !Contracts[chainId!] ?
-                    connected ?
-                        <div>Unsupported network ({chainId!})</div>
-                        :
-                        <div>Connect your wallet</div>
-                :
-            
-                !saleOpen || !open ?
-                    <div>Presale is closed</div>
-                    :
-                    <div>
-                        <div className="presale-tokens">
-                            <h3>Choose Token</h3>
-                            <span className="border-outer inline"><span className="border-inner inline">
-                            <select onChange={(e) => setToken(e.target.value)}>
-                                {ContributionTokens[chainId!].map(value => 
-                                    <option key={value} value={Contracts[chainId!][value]}>{value}</option>
-                                )}
-                               
-                            </select>
-                            </span></span>
-                            <div className="presale-balance">Balance: ${balance.toLocaleString()}</div>
-                        </div>
-                        <div className="presale-amount">
-                            <h3>Amount to contribute</h3>
-                            <span className="border-outer inline"><span className="border-inner inline"><input type="text" onChange={(e) => {handleChange(e.target.value)}}/></span></span>
-                        </div>
+            <div className="border-outer">
+                <div className="border-inner">
+                    <div className="presale-container">
+                        {!Contracts[chainId!] ? (
+                            connected ? (
+                                <div>Unsupported network ({chainId!})</div>
+                            ) : (
+                                <div>Connect your wallet</div>
+                            )
+                        ) : !saleOpen || !open ? (
+                            <div>Presale is closed</div>
+                        ) : (
+                            <div>
+                                <div className="presale-tokens">
+                                    <h3>Choose Token</h3>
+                                    <span className="border-outer inline">
+                                        <span className="border-inner inline">
+                                            <select
+                                                onChange={(e) =>
+                                                    setToken(e.target.value)
+                                                }
+                                            >
+                                                {ContributionTokens[
+                                                    chainId!
+                                                ].map((value) => (
+                                                    <option
+                                                        key={value}
+                                                        value={
+                                                            Contracts[chainId!][
+                                                                value
+                                                            ]
+                                                        }
+                                                    >
+                                                        {value}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </span>
+                                    </span>
+                                    <div className="presale-balance">
+                                        Available:{" "}
+                                        <span>{balance.toLocaleString()}</span>
+                                    </div>
+                                </div>
+                                <div className="presale-amount">
+                                    <h3>Amount to contribute</h3>
+                                    <span className="border-outer inline">
+                                        <span className="border-inner inline">
+                                            <input
+                                                type="text"
+                                                onChange={(e) => {
+                                                    handleChange(
+                                                        e.target.value
+                                                    );
+                                                }}
+                                            />
+                                        </span>
+                                    </span>
+                                </div>
 
-                        <div className="presale-output">
-                            <h3>You will get</h3>
-                            <div className="presale-output-amount">{(amount / 0.03).toFixed(2)} YC</div>
-                        </div>
-                        <div className="presale-proceeed">
-                            { saleOpen ?
-                                <button className={txRunning ? "running" : ""} onClick={() => contribute()} disabled={txRunning}>Contribute</button>:""
-                            }
-                        </div>
-                        <div>Your contribution: ${contribution.toLocaleString()}</div>
+                                <div className="presale-output">
+                                    <h3>You will get</h3>
+                                    <div className="presale-output-amount">
+                                        <span>
+                                            {(amount / 0.03).toFixed(2)}
+                                        </span>{" "}
+                                        YC
+                                    </div>
+                                </div>
+                                <div className="presale-proceed">
+                                    {saleOpen ? (
+                                        <button
+                                            className={
+                                                txRunning ? "running" : ""
+                                            }
+                                            onClick={() => contribute()}
+                                            disabled={txRunning}
+                                        >
+                                            Contribute
+                                        </button>
+                                    ) : (
+                                        ""
+                                    )}
+                                </div>
+                                <div className="presale-balance">
+                                    Your contribution: $
+                                    {contribution.toLocaleString()}
+                                </div>
+                            </div>
+                        )}
                     </div>
-                }
+                </div>
+            </div>
         </div>
-        </div>
-        </div>
-        <Raised />
-        </div>
-    )
-}
+    );
+};
 
 export default Presale;
 
