@@ -19,15 +19,19 @@ const Presale = () => {
     const [approved, setApproved] = useState(false);
     const [allowance, setAllowance] = useState(0);
     const [txRunning, setTxRunning] = useState(false);
-    const [saleOpen, setSaleOpen] = useState(false);
     const [balance, setBalance] = useState(0);
     const [contribution, setContribution] = useState(0);
 
-    const handleChange = (value: string) => {
+    const handleChange = (value: string): boolean => {
         if (value === "") {
             value = "0";
         }
+
+        if(isNaN(parseFloat(value))) {
+            return false;
+        }
         setAmount(parseFloat(value));
+        return true;
     };
 
     const getAllowance = () => {
@@ -85,6 +89,7 @@ const Presale = () => {
                             console.log(receipt.logs[0]);
                             reload();
                             getAllowance();
+                            getContribution();
                         }
                         setTxRunning(false);
                     });
@@ -92,6 +97,14 @@ const Presale = () => {
                 .catch(() => setTxRunning(false));
         }
     };
+
+    const getContribution = () => {
+        if(presaleContract !== undefined) {
+            presaleContract.contributions(address).then((v) => {
+                setContribution(parseFloat(ethers.utils.formatEther(v)));
+            });
+        }
+    }
 
     useEffect(() => {
         if (token == "" && chainId && Contracts[chainId!]) {
@@ -120,25 +133,14 @@ const Presale = () => {
                 setBalance(parseFloat(ethers.utils.formatEther(v)));
             });
 
-            presaleContract.isOpen().then((value) => {
-                console.log(value);
-                setSaleOpen(value);
-            });
-
-            presaleContract.contributions(address).then((v) => {
-                setContribution(parseFloat(ethers.utils.formatEther(v)));
-            });
+            getContribution()
         }
     }, [token, presaleContract, provider]);
 
     useEffect(() => {
         getAllowance();
-        console.log(token);
     }, [tokenContract]);
 
-    useEffect(() => {
-        console.log(allowance);
-    }, [allowance]);
     return (
         <div>
             <div className="border-outer">
@@ -150,7 +152,7 @@ const Presale = () => {
                             ) : (
                                 <div>Connect your wallet</div>
                             )
-                        ) : !saleOpen || !open ? (
+                        ) : !open ? (
                             <div>Presale is closed</div>
                         ) : (
                             <div>
@@ -211,7 +213,7 @@ const Presale = () => {
                                     </div>
                                 </div>
                                 <div className="presale-proceed">
-                                    {saleOpen ? (
+                                    {open ? (
                                         <button
                                             className={
                                                 txRunning ? "running" : ""
