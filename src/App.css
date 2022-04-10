@@ -105,6 +105,7 @@ body::-webkit-scrollbar {
 .details-container {
     right: 2em;
     text-align: center;
+    min-width: 20vw;
 }
 
 .details-container h2 {
@@ -129,7 +130,12 @@ body::-webkit-scrollbar {
     justify-content: space-between;
     position: relative;
     padding-bottom: 0.1em;
-    gap: 0.3rem;
+    gap: 3rem;
+}
+
+.details-container li span {
+    font-weight: bold;
+    opacity: 0.9;
 }
 .details-container li::after {
     content: "";
@@ -143,7 +149,7 @@ body::-webkit-scrollbar {
 }
 
 .details-vesting h3 {
-    font-size: 1.3em;
+    font-size: 1.25em;
     margin: 1rem 0 0.5rem 0;
 }
 
@@ -287,12 +293,12 @@ hr.white-hr {
 
 hr {
     background: var(--main-gradient);
-    height: 3px;
+    height: 2px;
     border: none;
 }
 
 .border-outer {
-    padding: 3px;
+    padding: 2px;
     background-color: rgb(42, 199, 237);
     background-image: var(--main-gradient);
     border-radius: 0.8rem;

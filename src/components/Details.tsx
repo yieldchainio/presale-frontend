@@ -67,7 +67,27 @@ const Details = () => {
                 </li>
                 <div className="details-vesting">
                     <h3>Vesting</h3>
-                    3% @TGE, 2 months cliff, 12 months linear daily vesting
+                    <ul className="details-tokenomics">
+                        <li>
+                            Initial Release
+                            <span className="details-value">3% @TGE</span>
+                        </li>
+                        <li>
+                            Cliff Period
+                            <span className="details-value">2 Months</span>
+                        </li>
+                        <li>
+                            Release Period
+                            <span className="details-value">12 Months</span>
+                        </li>
+                        <li>
+                            Release Schedule
+                            <span className="details-value">
+                                Linear Daily Unlock
+                            </span>
+                        </li>
+                    </ul>
+                    {/* 3% @TGE, 2 months cliff, 12 months linear daily vesting */}
                 </div>
             </ul>
             <hr />
