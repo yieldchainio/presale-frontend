@@ -44,19 +44,34 @@ const Details = () => {
         <div className="details-container">
             <h2>Sale Details</h2>
             <hr />
-            <div className="details-tokenomics">
-                <div>Round: Pre-Seed</div>
-                <div>Price per token: $0.03</div>
-                <div>Maximal contribution: ${maxContrib}</div>
-                <div>Total raise size: ${hardCap}</div>
-                <div>Total supply: 1,000,000</div>
-            </div>
+            <ul className="details-tokenomics">
+                <li>
+                    Round
+                    <span className="details-value">Pre-Seed</span>
+                </li>
+                <li>
+                    Price per token
+                    <span className="details-value">$0.03</span>
+                </li>
+                <li>
+                    Maximal contribution
+                    <span className="details-value">${maxContrib}</span>
+                </li>
+                <li>
+                    Total raise size
+                    <span className="details-value">${hardCap}</span>
+                </li>
+                <li>
+                    Total supply
+                    <span className="details-value">1,000,000</span>
+                </li>
+                <div className="details-vesting">
+                    <h3>Vesting</h3>
+                    3% @TGE, 2 months cliff, 12 months linear daily vesting
+                </div>
+            </ul>
             <hr />
-            <div className="details-vesting">
-                <h3>Vesting:</h3>
-                3% @TGE, 2 months cliff, 12 months linear daily vesting
-            </div>
-            <hr />
+            {/* <hr className="white-hr" /> */}
             <div className="details-info">
                 <div>
                     Website: <a href="https://yieldchain.io">yieldchain.io</a>

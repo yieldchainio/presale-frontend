@@ -107,10 +107,51 @@ body::-webkit-scrollbar {
     text-align: center;
 }
 
+.details-container h2 {
+    margin: 0;
+}
+
 .details-container a {
     color: white;
 }
 
+.details-container ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.details-container li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    padding-bottom: 0.1em;
+    gap: 0.3rem;
+}
+.details-container li::after {
+    content: "";
+    position: absolute;
+    bottom: -13%;
+    left: 0;
+    background: white;
+    height: 1px;
+    width: 100%;
+    opacity: 0.1;
+}
+
+.details-vesting h3 {
+    font-size: 1.3em;
+    margin: 1rem 0 0.5rem 0;
+}
+
+hr.white-hr {
+    background: white;
+    height: 3px;
+    border: none;
+}
 .presale-container {
     min-width: 600px;
     text-align: center;
