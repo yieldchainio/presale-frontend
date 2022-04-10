@@ -23,22 +23,47 @@ const Raised = () => {
 
     return (
         <div className="raised-container">
-            Total Raised: <br />${raised.toLocaleString()} / $
-            {TOTAL_RAISE.toLocaleString()}
+            <div className="raised-title">Total Raised</div>
+            <br />
+            <div className="raised-amounts">
+                <span className="raised-current">
+                    ${raised.toLocaleString()} /{" "}
+                </span>
+                <span className="raised-total">
+                    ${TOTAL_RAISE.toLocaleString()}
+                </span>
+            </div>
             <div
-                className="raised-details-title"
+                className={`raised-details-title ${showDetails ? "show" : ""}`}
                 onClick={(e) => {
                     setShowDetails(!showDetails);
                 }}
             >
-                Details
+                {showDetails ? (
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            fill="currentColor"
+                            d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"
+                        />
+                    </svg>
+                ) : (
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            fill="currentColor"
+                            d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
+                        />
+                    </svg>
+                )}
             </div>
             <div className={`raised-details ${showDetails ? "show" : ""}`}>
-                {raisedPerChain.map((v, i) => (
-                    <div>
-                        {Networks[CHAINS[i]]} : ${v.toLocaleString()}
-                    </div>
-                ))}
+                <ul>
+                    {raisedPerChain.map((v, i) => (
+                        <li>
+                            <span>${v.toLocaleString() + " "}</span>
+                            <span>{Networks[CHAINS[i]]}</span>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </div>
     );
