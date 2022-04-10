@@ -387,7 +387,7 @@ body::-webkit-scrollbar {
 
 .raised-details.show li .progress-bar {
     position: absolute;
-    bottom: -10%;
+    bottom: -5%;
     left: 0;
     background: var(--main-gradient);
     height: 4px;
