@@ -373,7 +373,8 @@ body::-webkit-scrollbar {
     font-size: 0.7em;
 }
 
-.raised-details.show li::after {
+/* Use this if removing the ProgressBar indicator from the contribution list */
+/* .raised-details.show li::after {
     content: "";
     position: absolute;
     bottom: -13%;
@@ -382,6 +383,17 @@ body::-webkit-scrollbar {
     height: 1px;
     width: 100%;
     opacity: 0.1;
+} */
+
+.raised-details.show li .progress-bar {
+    position: absolute;
+    bottom: -10%;
+    left: 0;
+    background: var(--main-gradient);
+    height: 4px;
+    border-radius: 1em;
+    width: 2%;
+    max-width: 100%;
 }
 
 .title {

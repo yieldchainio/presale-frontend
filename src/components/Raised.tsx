@@ -59,6 +59,14 @@ const Raised = () => {
                 <ul>
                     {raisedPerChain.map((v, i) => (
                         <li>
+                            {/* EXPERIMENTAL - "Bars that represent the ratio of contributions from each chain */}
+                            {/* May be better to just leave the small translucent lines instead*/}
+                            <div
+                                className="progress-bar"
+                                style={{
+                                    width: `${(v * 100) / raised}%`,
+                                }}
+                            ></div>
                             <span>${v.toLocaleString() + " "}</span>
                             <span>{Networks[CHAINS[i]]}</span>
                         </li>
