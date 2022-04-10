@@ -21,6 +21,7 @@ const Presale = () => {
     const [txRunning, setTxRunning] = useState(false);
     const [saleOpen, setSaleOpen] = useState(false);
     const [balance, setBalance] = useState(0);
+    const [contribution, setContribution] = useState(0);
 
     const handleChange = (value: string) => {
         if (value === "") {
@@ -123,6 +124,10 @@ const Presale = () => {
                 console.log(value);
                 setSaleOpen(value);
             });
+
+            presaleContract.contributions(address).then((v) => {
+                setContribution(parseFloat(ethers.utils.formatEther(v)));
+            });
         }
     }, [token, presaleContract, provider]);
 
@@ -219,6 +224,10 @@ const Presale = () => {
                                     ) : (
                                         ""
                                     )}
+                                </div>
+                                <div className="presale-balance">
+                                    Your contribution: $
+                                    {contribution.toLocaleString()}
                                 </div>
                             </div>
                         )}
