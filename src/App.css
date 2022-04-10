@@ -373,13 +373,13 @@ body::-webkit-scrollbar {
 }
 
 .raised-details.show li a {
-  color: var(--palette-white);
-  filter: brightness(0.8);
-  transition: filter 0.2s ease-in-out;
+    color: var(--palette-white);
+    filter: brightness(0.8);
+    transition: filter 0.2s ease-in-out;
 }
 
 .raised-details.show li a:hover {
-  filter: brightness(1);
+    filter: brightness(1);
 }
 
 .raised-details.show li *:last-child {
@@ -452,6 +452,18 @@ hr {
     .raised-details.show ul {
         max-width: 85%;
     }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 /*

@@ -27,11 +27,20 @@ const Presale = () => {
             value = "0";
         }
 
-        if (isNaN(parseFloat(value))) {
-            return false;
+        // Checking whether the ENTIRE input is valid (So we check the pattern only matches )
+        console.log(value);
+        console.log(RegExp("^[+-]?[0-9]+(.[0-9]+)?$").test(value));
+        console.log(parseFloat(value));
+        if (RegExp("^[+-]?[0-9]+(.[0-9]+)?$").exec(value)?.length !== 1) {
+            const parsedValue = parseFloat(value);
+            if (parsedValue <= 0) {
+                setAmount(0);
+            } else {
+                setAmount(parsedValue);
+            }
+        } else {
+            setAmount(0);
         }
-        setAmount(parseFloat(value));
-        return true;
     };
 
     const getAllowance = () => {
@@ -192,7 +201,7 @@ const Presale = () => {
                                     <span className="border-outer inline">
                                         <span className="border-inner inline">
                                             <input
-                                                type="text"
+                                                type="number"
                                                 onChange={(e) => {
                                                     handleChange(
                                                         e.target.value
