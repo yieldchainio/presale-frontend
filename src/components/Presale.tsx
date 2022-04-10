@@ -28,10 +28,6 @@ const Presale = () => {
             value = "0";
         }
 
-        // Checking whether the ENTIRE input is valid (So we check the pattern only matches )
-        console.log(value);
-        console.log(RegExp("^[+-]?[0-9]+(.[0-9]+)?$").test(value));
-        console.log(parseFloat(value));
         if (RegExp("^[+-]?[0-9]+(.[0-9]+)?$").exec(value)?.length !== 1) {
             const parsedValue = parseFloat(value);
             if (parsedValue <= 0) {
