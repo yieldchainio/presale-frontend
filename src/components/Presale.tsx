@@ -21,6 +21,7 @@ const Presale = () => {
     const [txRunning, setTxRunning] = useState(false);
     const [balance, setBalance] = useState(0);
     const [contribution, setContribution] = useState(0);
+    const [invalidInput, setInvalidInput] = useState(false);
 
     const handleChange = (value: string) => {
         if (value === "") {
@@ -35,10 +36,13 @@ const Presale = () => {
             const parsedValue = parseFloat(value);
             if (parsedValue <= 0) {
                 setAmount(0);
+                setInvalidInput(true);
             } else {
+                setInvalidInput(false);
                 setAmount(parsedValue);
             }
         } else {
+            setInvalidInput(true);
             setAmount(0);
         }
     };
@@ -198,7 +202,11 @@ const Presale = () => {
                                 </div>
                                 <div className="presale-amount">
                                     <h3>Amount to contribute</h3>
-                                    <span className="border-outer inline">
+                                    <span
+                                        className={`border-outer inline ${
+                                            invalidInput ? "invalid" : ""
+                                        }`}
+                                    >
                                         <span className="border-inner inline">
                                             <input
                                                 type="number"
