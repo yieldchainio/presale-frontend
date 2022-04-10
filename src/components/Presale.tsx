@@ -22,12 +22,12 @@ const Presale = () => {
     const [balance, setBalance] = useState(0);
     const [contribution, setContribution] = useState(0);
 
-    const handleChange = (value: string): boolean => {
+    const handleChange = (value: string) => {
         if (value === "") {
             value = "0";
         }
 
-        if(isNaN(parseFloat(value))) {
+        if (isNaN(parseFloat(value))) {
             return false;
         }
         setAmount(parseFloat(value));
@@ -99,12 +99,12 @@ const Presale = () => {
     };
 
     const getContribution = () => {
-        if(presaleContract !== undefined) {
+        if (presaleContract !== undefined) {
             presaleContract.contributions(address).then((v) => {
                 setContribution(parseFloat(ethers.utils.formatEther(v)));
             });
         }
-    }
+    };
 
     useEffect(() => {
         if (token == "" && chainId && Contracts[chainId!]) {
@@ -133,7 +133,7 @@ const Presale = () => {
                 setBalance(parseFloat(ethers.utils.formatEther(v)));
             });
 
-            getContribution()
+            getContribution();
         }
     }, [token, presaleContract, provider]);
 
