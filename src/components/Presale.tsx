@@ -7,6 +7,7 @@ import { ERC20 } from "../typechain/ERC20";
 import { ERC20__factory } from "../typechain/factories/ERC20__factory";
 import { ethers } from "ethers";
 import { usePresaleContext } from "../hooks/userPresaleContext";
+import Modal from "./Modal";
 import Raised from "./Raised";
 
 const Presale = () => {
@@ -23,6 +24,8 @@ const Presale = () => {
     const [contribution, setContribution] = useState(0);
     const [txError, setTxError] = useState("");
     const [invalidInput, setInvalidInput] = useState(false);
+    // TODO: Change to false by default
+    const [isModalOpen, setIsModalOpen] = useState(true);
 
     const handleChange = (value: string) => {
         if (value === "") {
@@ -71,12 +74,16 @@ const Presale = () => {
                 );
                 await tx.wait();
                 getAllowance();
-            } catch (e:any) {
+            } catch (e: any) {
                 console.log(e);
                 setTxError(e!.message);
             }
             setTxRunning(false);
         }
+    };
+
+    const openLegalsModal = () => {
+        setIsModalOpen(true);
     };
 
     const contribute = async () => {
@@ -104,10 +111,10 @@ const Presale = () => {
                         setTxRunning(false);
                     });
                 })
-                .catch((e:any) => {
-                    console.log(e)
-                    setTxRunning(false)
-                    setTxError(e.message)
+                .catch((e: any) => {
+                    console.log(e);
+                    setTxRunning(false);
+                    setTxError(e.message);
                 });
         }
     };
@@ -155,8 +162,78 @@ const Presale = () => {
         getAllowance();
     }, [tokenContract]);
 
+    // TODO: This probably could be loaded from some place other than here
+    const jurisdictions = [
+        "United States of America (including its territories)",
+        "Canada",
+        "Democratic People’s Republic of Korea",
+        "Cuba",
+        "Syria",
+        "Iran",
+        "Crimea",
+        "People’s Republic of China",
+        "Bahamas",
+        "Belarus",
+        "Botswana",
+        "Burundi",
+        "Cambodia",
+        "Central African Republic",
+        "The Democratic Republic of the Congo",
+        "Côte d’Ivoire",
+        "Ethiopia",
+        "Ghana",
+        "Islamic Republic of Iran",
+        "Iraq",
+        "Lebanon",
+        "Libya",
+        "Mali",
+        "Myanmar",
+        "Nicaragua",
+        "Pakistan",
+        "Panama",
+        "Somalia",
+        "South Sudan",
+        "Sri Lanka",
+        "Sudan",
+        "Syrian Arab Republic",
+        "Trinidad and Tobago",
+        "Tunisia",
+        "Bolivarian Republic of Venezuela",
+        "Yemen",
+        "Zimbabwe",
+    ].sort();
+
     return (
         <div>
+            <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <div className="legal-warning">
+                    <span>
+                        By proceeding you agree to not be a member of the
+                        following jurisdictions:
+                    </span>
+                    <p
+                        style={{
+                            columnCount: 3,
+                        }}
+                    >
+                        {jurisdictions.map((j, i) => (
+                            <span key={j} className={i % 2 === 0 ? "" : "odd"}>
+                                {j}
+                                <br />
+                            </span>
+                        ))}
+                    </p>
+                    <button
+                        className="legal-proceed"
+                        onClick={(e) => {
+                            setIsModalOpen(false);
+                            contribute();
+                        }}
+                    >
+                        Proceed
+                    </button>
+                </div>
+            </Modal>
             <div className="border-outer">
                 <div className="border-inner">
                     <div className="presale-container">
@@ -236,7 +313,7 @@ const Presale = () => {
                                             className={
                                                 txRunning ? "running" : ""
                                             }
-                                            onClick={() => contribute()}
+                                            onClick={() => openLegalsModal()}
                                             disabled={txRunning}
                                         >
                                             Contribute
@@ -249,9 +326,7 @@ const Presale = () => {
                                     Your contribution: $
                                     {contribution.toLocaleString()}
                                 </div>
-                                <div className="presale-error">
-                                    {txError}
-                                </div>
+                                <div className="presale-error">{txError}</div>
                             </div>
                         )}
                     </div>
