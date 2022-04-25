@@ -21,6 +21,7 @@ const Presale = () => {
     const [txRunning, setTxRunning] = useState(false);
     const [balance, setBalance] = useState(0);
     const [contribution, setContribution] = useState(0);
+    const [txError, setTxError] = useState("");
 
     const handleChange = (value: string): boolean => {
         if (value === "") {
@@ -61,8 +62,9 @@ const Presale = () => {
                 );
                 await tx.wait();
                 getAllowance();
-            } catch (e) {
+            } catch (e:any) {
                 console.log(e);
+                setTxError(e!.message);
             }
             setTxRunning(false);
         }
@@ -80,13 +82,12 @@ const Presale = () => {
 
             setTxRunning(true);
             console.log(ethers.utils.parseEther(amount.toString()));
+
             presaleContract!
                 .contribute(token, ethers.utils.parseEther(amount.toString()))
                 .then((tx) => {
                     tx.wait().then((receipt) => {
                         if (receipt.status == 1) {
-                            console.log("contributed");
-                            console.log(receipt.logs[0]);
                             reload();
                             getAllowance();
                             getContribution();
@@ -94,7 +95,11 @@ const Presale = () => {
                         setTxRunning(false);
                     });
                 })
-                .catch(() => setTxRunning(false));
+                .catch((e:any) => {
+                    console.log(e)
+                    setTxRunning(false)
+                    setTxError(e.message)
+                });
         }
     };
 
@@ -230,6 +235,9 @@ const Presale = () => {
                                 <div className="presale-balance">
                                     Your contribution: $
                                     {contribution.toLocaleString()}
+                                </div>
+                                <div className="presale-error">
+                                    {txError}
                                 </div>
                             </div>
                         )}

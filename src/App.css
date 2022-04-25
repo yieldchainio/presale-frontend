@@ -271,6 +271,10 @@ body::-webkit-scrollbar {
     width: 100%;
 }
 
+.presale-container .presale-error {
+    color: red;
+}
+
 .raised-container {
     margin: 2em auto;
     text-align: center;
