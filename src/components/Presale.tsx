@@ -22,17 +22,26 @@ const Presale = () => {
     const [balance, setBalance] = useState(0);
     const [contribution, setContribution] = useState(0);
     const [txError, setTxError] = useState("");
+    const [invalidInput, setInvalidInput] = useState(false);
 
-    const handleChange = (value: string): boolean => {
+    const handleChange = (value: string) => {
         if (value === "") {
             value = "0";
         }
 
-        if(isNaN(parseFloat(value))) {
-            return false;
+        if (RegExp("^[+-]?[0-9]+(.[0-9]+)?$").exec(value)?.length !== 1) {
+            const parsedValue = parseFloat(value);
+            if (parsedValue <= 0) {
+                setAmount(0);
+                setInvalidInput(true);
+            } else {
+                setInvalidInput(false);
+                setAmount(parsedValue);
+            }
+        } else {
+            setInvalidInput(true);
+            setAmount(0);
         }
-        setAmount(parseFloat(value));
-        return true;
     };
 
     const getAllowance = () => {
@@ -104,12 +113,12 @@ const Presale = () => {
     };
 
     const getContribution = () => {
-        if(presaleContract !== undefined) {
+        if (presaleContract !== undefined) {
             presaleContract.contributions(address).then((v) => {
                 setContribution(parseFloat(ethers.utils.formatEther(v)));
             });
         }
-    }
+    };
 
     useEffect(() => {
         if (token == "" && chainId && Contracts[chainId!]) {
@@ -138,7 +147,7 @@ const Presale = () => {
                 setBalance(parseFloat(ethers.utils.formatEther(v)));
             });
 
-            getContribution()
+            getContribution();
         }
     }, [token, presaleContract, provider]);
 
@@ -194,10 +203,14 @@ const Presale = () => {
                                 </div>
                                 <div className="presale-amount">
                                     <h3>Amount to contribute</h3>
-                                    <span className="border-outer inline">
+                                    <span
+                                        className={`border-outer inline ${
+                                            invalidInput ? "invalid" : ""
+                                        }`}
+                                    >
                                         <span className="border-inner inline">
                                             <input
-                                                type="text"
+                                                type="number"
                                                 onChange={(e) => {
                                                     handleChange(
                                                         e.target.value

@@ -33,6 +33,12 @@ body {
         /* Remove this color to return to previous gradient*/
             var(--palette-green) 100%
     );
+    --invalid-gradient: linear-gradient(
+        75deg,
+        hsl(0, 66%, 53%) 0%,
+        hsl(0, 45%, 41%) 31%,
+        hsl(0, 86%, 38%) 91%
+    );
 
     font-family: "Athletics", sans-serif;
 }
@@ -377,13 +383,13 @@ body::-webkit-scrollbar {
 }
 
 .raised-details.show li a {
-  color: var(--palette-white);
-  filter: brightness(0.8);
-  transition: filter 0.2s ease-in-out;
+    color: var(--palette-white);
+    filter: brightness(0.8);
+    transition: filter 0.2s ease-in-out;
 }
 
 .raised-details.show li a:hover {
-  filter: brightness(1);
+    filter: brightness(1);
 }
 
 .raised-details.show li *:last-child {
@@ -437,6 +443,10 @@ hr {
     border-radius: 0.8rem;
 }
 
+.border-outer.invalid {
+    background-image: var(--invalid-gradient);
+}
+
 .border-inner {
     border-radius: 0.8rem;
     border: none;
@@ -456,6 +466,18 @@ hr {
     .raised-details.show ul {
         max-width: 85%;
     }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 /*
