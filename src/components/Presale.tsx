@@ -24,8 +24,7 @@ const Presale = () => {
     const [contribution, setContribution] = useState(0);
     const [txError, setTxError] = useState("");
     const [invalidInput, setInvalidInput] = useState(false);
-    // TODO: Change to false by default
-    const [isModalOpen, setIsModalOpen] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleChange = (value: string) => {
         if (value === "") {
