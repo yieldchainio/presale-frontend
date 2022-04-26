@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Contracts, ContributionTokens } from "../constants";
+import { CHAINS, Contracts, ContributionTokens } from "../constants";
 import { useWeb3Context } from "../hooks/useWeb3Context";
 import { Presale as TPresale } from "../typechain/Presale";
 import { Presale__factory } from "../typechain/factories/Presale__factory";
@@ -236,7 +236,7 @@ const Presale = () => {
             <div className="border-outer">
                 <div className="border-inner">
                     <div className="presale-container">
-                        {!Contracts[chainId!] ? (
+                        { !(CHAINS.includes(chainId!)) || !Contracts[chainId!] ? (
                             connected ? (
                                 <div>Unsupported network ({chainId!})</div>
                             ) : (

@@ -4,17 +4,19 @@ export enum ChainID {
     BSC = 56,
     BSC_TESTNET = 97,
 
-    AVAX = 0,
+    AVAX = 43114,
     AVAX_TESTNET = 43113,
 
-    POLY = 0,
+    POLY = 137,
     POLY_TESTNET = 80001,
 
-    FTM = 0,
+    FTM = 250,
     FTM_TESTNET = 4002,
 }
 
 export const CHAINS = [ChainID.BSC_TESTNET, ChainID.AVAX_TESTNET, ChainID.FTM_TESTNET, ChainID.POLY_TESTNET];
+//export const CHAINS = [ChainID.BSC, ChainID.AVAX, ChainID.FTM, ChainID.POLY];
+
 
 interface IContracts {
     [key: number]: { [key: string]: string };
@@ -26,12 +28,24 @@ export const Contracts:IContracts = {
         USDT: "0x9B90388F9A727622DE07988580E2D5f5D5E64368",
         USDC: "0x550d999a47954f859541Cb2Bc24CbAb7C9CAfe31",
         BUSD: "0xa90214368b49c1D0D7921bee2A433C1293Eba13c",
-    },  
+    },
+    [ChainID.BSC] : {
+        PRESALE : "",
+        USDT : "0x55d398326f99059ff775485246999027b3197955",
+        USDC : "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+        BUSD : "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    },
     [ChainID.POLY_TESTNET]: {
         PRESALE: "0x261898D6e55C0A6B4842a214c61E870adE3daf8e",
         USDT: "0x41A74cbdfB815dc47e8F130AE6f27710adCd98b3",
         USDC: "0x00c1b9E490452cEe0d3d90c9778b32657d304327",
         BUSD: "0x95E40788c5990Ea749aC8117cA03eC6E0E91f3eF",
+    },
+    [ChainID.POLY] : {
+        PRESALE : "",
+        USDT : "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+        USDC : "0xa8d394fe7380b8ce6145d5f85e6ac22d4e91acde",
+        BUSD : "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
     },
     [ChainID.AVAX_TESTNET]: {
         PRESALE: "0xbbb2BA6F2Eb5Acaf2ca29338839566E69AdbcC98",
@@ -39,11 +53,22 @@ export const Contracts:IContracts = {
         USDC: "0x524d792C5C474362DD12Bc530B2c2DF7BB074cCD",
         BUSD: "0x919dd23f4bB6F7c92b466aC232e6487132f4DA0f",
     },
+    [ChainID.AVAX] : {
+        PRESALE : "",
+        USDT : "0xc7198437980c041c805a1edcba50c1ce5db95118",
+        USDC : "0x19860CCB0A68fd4213aB9D8266F7bBf05A8dDe98",
+        BUSD : "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    },
     [ChainID.FTM_TESTNET]: {
         PRESALE: "0x13dD0b14AA28f97154ab13d8df837305490eEb26",
         USDT: "0x5D76268bE65e59D99C29Bd3493F2178bE941F873",
         USDC: "0x997924baaBb096c3c89Db527fA4FB67a0924fFFD",
-    }
+    },
+    [ChainID.FTM] : {
+        PRESALE : "",
+        USDT : "0x049d68029688eabf473097a2fc38ef61633a3c7a",
+        USDC : "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    },
 }
 
 interface IContributionTokens {
@@ -54,6 +79,10 @@ export const ContributionTokens:IContributionTokens = {
     [ChainID.POLY_TESTNET]: ["USDT", "USDC", "BUSD"],
     [ChainID.AVAX_TESTNET]: ["USDT", "USDC", "BUSD"],
     [ChainID.FTM_TESTNET]: ["USDT", "USDC"],
+    [ChainID.BSC]: ["USDT", "USDC", "BUSD"],
+    [ChainID.POLY]: ["USDT", "USDC", "BUSD"],
+    [ChainID.AVAX]: ["USDT", "USDC", "BUSD"],
+    [ChainID.FTM]: ["USDT", "USDC"],
 }
 
 interface IRpcUrls {
@@ -64,26 +93,34 @@ export const RpcUrls:IRpcUrls = {
     [ChainID.BSC_TESTNET]: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
     [ChainID.BSC]: 'https://bsc-dataseed.binance.org/',
     [ChainID.AVAX_TESTNET]: 'https://api.avax-test.network/ext/bc/C/rpc',
-    //[ChainID.AVAX]: '',
+    [ChainID.AVAX]: 'https://api.avax.network/ext/bc/C/rpc',
     [ChainID.POLY_TESTNET]: 'https://matic-mumbai.chainstacklabs.com',
-    //[ChainID.POLY]: '',
+    [ChainID.POLY]: 'https://polygon-rpc.com/',
     [ChainID.FTM_TESTNET]: 'https://rpc.testnet.fantom.network/',
-    //[ChainID.FTM]: '',
+    [ChainID.FTM]: 'https://rpcapi.fantom.network/',
 
 }
 
 export const Networks:IRpcUrls = {
     [ChainID.BSC_TESTNET] : "BSC Testnet",
+    [ChainID.BSC] : "BNB Chain",
     [ChainID.POLY_TESTNET] : "Mumbai Testnet",
+    [ChainID.POLY] : "Polygon",
     [ChainID.AVAX_TESTNET] : "AVAX Testnet",
+    [ChainID.AVAX] : "Avalanche",
     [ChainID.FTM_TESTNET] : "FTM Testnet",
+    [ChainID.FTM] : "Fantom",
 }
 
 export const Explorers:IRpcUrls = {
     [ChainID.BSC_TESTNET] : "http://testnet.bscscan.com/",
+    [ChainID.BSC] : "https://bscscan.com/",
     [ChainID.POLY_TESTNET] : "https://mumbai.polygonscan.com/",
+    [ChainID.POLY] : "https://polygonscan.com/",
     [ChainID.AVAX_TESTNET] : "https://testnet.snowtrace.io/",
+    [ChainID.AVAX] : "https://snowtrace.io",
     [ChainID.FTM_TESTNET] : "https://testnet.ftmscan.com/",
+    [ChainID.FTM]: "https://ftmscan.com/",
 }
 
 export const DEFAULT_CHAIN = ChainID.BSC_TESTNET;
