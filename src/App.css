@@ -43,7 +43,7 @@ body {
     font-family: "Athletics", sans-serif;
 }
 
-body::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
     background: linear-gradient(
         45deg,
         var(--palette-light-blue) 0%,
@@ -51,14 +51,23 @@ body::-webkit-scrollbar-thumb {
         var(--palette-green) 100%
     );
     opacity: 0.2;
-    border-radius: 0.1em;
+    border-radius: 0.15em;
 }
 
-body::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
     background: hsl(0, 0%, 9%);
-    box-shadow: 0 0 5px hsl(0, 0%, 9%);
+    border-radius: 0.15em;
 }
-body::-webkit-scrollbar {
+
+*::-webkit-scrollbar {
+    background: hsl(0, 0%, 9%);
+    width: 0.35em;
+    max-height: 10px;
+}
+
+.modal-content::-webkit-scrollbar {
+    background: hsl(0, 0%, 9%);
+    border-radius: 0.15em;
     width: 0.35em;
     max-height: 10px;
 }
@@ -277,6 +286,10 @@ body::-webkit-scrollbar {
     width: 100%;
 }
 
+.presale-container .presale-error {
+    color: red;
+}
+
 .raised-container {
     margin: 2em auto;
     text-align: center;
@@ -451,6 +464,101 @@ hr {
 
 .text-center {
     text-align: center;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.modal {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--palette-white);
+    color: var(--palette-black);
+    padding: clamp(1rem, 1vw, 2rem);
+    width: clamp(30rem, 40vw, 70rem);
+    max-height: 70vh;
+    border-radius: 0.8rem;
+    z-index: 2000;
+    animation: fadeInUp 0.3s ease-in-out;
+}
+
+.modal .modal-content {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding: 0 1rem;
+    overflow-y: auto;
+}
+
+.modal .modal-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.modal .modal-bar svg {
+    cursor: pointer;
+    height: 1.5rem;
+    width: 1.5rem;
+    transition: 0.2s;
+}
+
+.modal .modal-bar svg:hover {
+    transform: scale(1.1);
+}
+
+.legal-warning {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.05em;
+}
+
+.legal-warning > span {
+    font-size: 1.1em;
+}
+.legal-warning .odd {
+    filter: opacity(0.85);
+}
+
+.legal-proceed {
+    width: max-content;
+    align-self: flex-end;
+    background: var(--palette-black);
+    color: var(--palette-white);
+    border: transparent solid 0.2em;
+    border-radius: 2em;
+    padding: 0.45em 0.9em;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.legal-proceed:hover {
+    background: var(--palette-white);
+    color: var(--palette-black);
+    border: var(--palette-black) solid 0.2em;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @media screen and (max-width: 670px) {
