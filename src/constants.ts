@@ -14,8 +14,8 @@ export enum ChainID {
     FTM_TESTNET = 4002,
 }
 
-export const CHAINS = [ChainID.BSC_TESTNET, ChainID.AVAX_TESTNET, ChainID.FTM_TESTNET, ChainID.POLY_TESTNET];
-//export const CHAINS = [ChainID.BSC, ChainID.AVAX, ChainID.FTM, ChainID.POLY];
+//export const CHAINS = [ChainID.BSC_TESTNET, ChainID.AVAX_TESTNET, ChainID.FTM_TESTNET, ChainID.POLY_TESTNET];
+export const CHAINS = [ChainID.BSC, ChainID.AVAX, ChainID.FTM, ChainID.POLY];
 
 
 interface IContracts {
@@ -30,7 +30,7 @@ export const Contracts:IContracts = {
         BUSD: "0xa90214368b49c1D0D7921bee2A433C1293Eba13c",
     },
     [ChainID.BSC] : {
-        PRESALE : "",
+        PRESALE : "0xC29911724799b343F4E4B855697bF1CaD98719a9",
         USDT : "0x55d398326f99059ff775485246999027b3197955",
         USDC : "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
         BUSD : "0xe9e7cea3dedca5984780bafc599bd69add087d56",
@@ -42,7 +42,7 @@ export const Contracts:IContracts = {
         BUSD: "0x95E40788c5990Ea749aC8117cA03eC6E0E91f3eF",
     },
     [ChainID.POLY] : {
-        PRESALE : "",
+        PRESALE : "0x75d9239dFC861D1c728050AC734f194f4B72d628",
         USDT : "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
         USDC : "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
         BUSD : "0xa8d394fe7380b8ce6145d5f85e6ac22d4e91acde",
@@ -54,7 +54,7 @@ export const Contracts:IContracts = {
         BUSD: "0x919dd23f4bB6F7c92b466aC232e6487132f4DA0f",
     },
     [ChainID.AVAX] : {
-        PRESALE : "",
+        PRESALE : "0x75d9239dFC861D1c728050AC734f194f4B72d628",
         USDT : "0xc7198437980c041c805a1edcba50c1ce5db95118",
         USDC : "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
         BUSD : "0x19860CCB0A68fd4213aB9D8266F7bBf05A8dDe98",
@@ -65,7 +65,7 @@ export const Contracts:IContracts = {
         USDC: "0x997924baaBb096c3c89Db527fA4FB67a0924fFFD",
     },
     [ChainID.FTM] : {
-        PRESALE : "",
+        PRESALE : "0x75d9239dFC861D1c728050AC734f194f4B72d628",
         USDT : "0x049d68029688eabf473097a2fc38ef61633a3c7a",
         USDC : "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     },
