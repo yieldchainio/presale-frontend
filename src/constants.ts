@@ -118,7 +118,7 @@ export const Explorers:IRpcUrls = {
     [ChainID.POLY_TESTNET] : "https://mumbai.polygonscan.com/",
     [ChainID.POLY] : "https://polygonscan.com/",
     [ChainID.AVAX_TESTNET] : "https://testnet.snowtrace.io/",
-    [ChainID.AVAX] : "https://snowtrace.io",
+    [ChainID.AVAX] : "https://snowtrace.io/",
     [ChainID.FTM_TESTNET] : "https://testnet.ftmscan.com/",
     [ChainID.FTM]: "https://ftmscan.com/",
 }
