@@ -19,6 +19,11 @@ const Raised = () => {
 
     const truncate = (n: number, decimals: number) =>
         Math.trunc(n * 10 ** decimals) / 10 ** decimals;
+
+    const calcBarRatio = (v: number) => {
+        const ratio = (v * 100) / raised;
+        return ratio <= 4 ? 4 : ratio;
+    };
     // const [raised, setRaised] = useState(NaN);
 
     /*useEffect(() => {
@@ -73,7 +78,7 @@ const Raised = () => {
                             <div
                                 className="progress-bar"
                                 style={{
-                                    width: `${(v * 100) / raised}%`,
+                                    width: `${calcBarRatio(v)}%`,
                                 }}
                             ></div>
                             <span>
