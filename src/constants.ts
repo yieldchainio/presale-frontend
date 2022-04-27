@@ -44,8 +44,8 @@ export const Contracts:IContracts = {
     [ChainID.POLY] : {
         PRESALE : "",
         USDT : "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
-        USDC : "0xa8d394fe7380b8ce6145d5f85e6ac22d4e91acde",
-        BUSD : "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+        USDC : "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+        BUSD : "0xa8d394fe7380b8ce6145d5f85e6ac22d4e91acde",
     },
     [ChainID.AVAX_TESTNET]: {
         PRESALE: "0xbbb2BA6F2Eb5Acaf2ca29338839566E69AdbcC98",
@@ -56,8 +56,8 @@ export const Contracts:IContracts = {
     [ChainID.AVAX] : {
         PRESALE : "",
         USDT : "0xc7198437980c041c805a1edcba50c1ce5db95118",
-        USDC : "0x19860CCB0A68fd4213aB9D8266F7bBf05A8dDe98",
-        BUSD : "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+        USDC : "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+        BUSD : "0x19860CCB0A68fd4213aB9D8266F7bBf05A8dDe98",
     },
     [ChainID.FTM_TESTNET]: {
         PRESALE: "0x13dD0b14AA28f97154ab13d8df837305490eEb26",
