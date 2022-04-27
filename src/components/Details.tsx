@@ -63,7 +63,7 @@ const Details = () => {
                 </li>
                 <li>
                     Total supply
-                    <span className="details-value">1,000,000</span>
+                    <span className="details-value">1,333,333</span>
                 </li>
                 <div className="details-vesting">
                     <h3>Vesting</h3>
