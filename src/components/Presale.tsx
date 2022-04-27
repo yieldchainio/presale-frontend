@@ -15,6 +15,7 @@ const Presale = () => {
     const { open, reload } = usePresaleContext();
     const [amount, setAmount] = useState<number>(0);
     const [token, setToken] = useState<string>("");
+    const [tokenDecimals, setDecimals] = useState(0);
     const [presaleContract, setPresaleContract] = useState<TPresale>();
     const [tokenContract, setTokenContract] = useState<ERC20>();
     const [approved, setApproved] = useState(false);
@@ -55,7 +56,7 @@ const Presale = () => {
             tokenContract!
                 .allowance(address, presaleContract!.address)
                 .then((value) => {
-                    setAllowance(parseFloat(ethers.utils.formatEther(value)));
+                    setAllowance(parseFloat(ethers.utils.formatUnits(value, tokenDecimals)));
                     setApproved(value.gt(0));
                 });
         }
@@ -69,7 +70,7 @@ const Presale = () => {
             try {
                 const tx = await tokenContract!.approve(
                     Contracts[chainId!].PRESALE,
-                    ethers.utils.parseEther(toApprove.toString())
+                    ethers.utils.parseUnits(toApprove.toString(), tokenDecimals)
                 );
                 await tx.wait();
                 getAllowance();
@@ -90,7 +91,7 @@ const Presale = () => {
 
     const contribute = async () => {
         setTxError("");
-        if (presaleContract !== undefined && provider !== null) {
+        if (presaleContract !== undefined && provider !== null && tokenDecimals > 0) {
             if (amount == 0) {
                 setTxError("Contribution too low");
                 return;
@@ -104,10 +105,10 @@ const Presale = () => {
             }
 
             setTxRunning(true);
-            console.log(ethers.utils.parseEther(amount.toString()));
+            console.log(ethers.utils.parseUnits(amount.toString(), tokenDecimals));
 
             presaleContract!
-                .contribute(token, ethers.utils.parseEther(amount.toString()))
+                .contribute(token, ethers.utils.parseUnits(amount.toString(), tokenDecimals))
                 .then((tx) => {
                     tx.wait().then((receipt) => {
                         if (receipt.status == 1) {
@@ -156,10 +157,12 @@ const Presale = () => {
                 provider!.getSigner()
             );
             setTokenContract(tc);
-
-            tc.balanceOf(address).then((v) => {
-                setBalance(parseFloat(ethers.utils.formatEther(v)));
-            });
+            tc.decimals().then((d) => {
+                setDecimals(d);
+                tc.balanceOf(address).then((v) => {
+                    setBalance(parseFloat(ethers.utils.formatUnits(v, d)));
+                });
+            })
 
             getContribution();
         }
@@ -291,6 +294,7 @@ const Presale = () => {
                                 <div className="presale-balance">
                                     Your contribution: $
                                     {contribution.toLocaleString()}
+                                    <br />*No refunds
                                 </div>
                                 <div className="presale-error">{txError}</div>
                             </div>
