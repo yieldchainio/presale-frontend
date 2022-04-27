@@ -121,7 +121,7 @@ const Presale = () => {
                 .catch((e: any) => {
                     console.log(e);
                     setTxRunning(false);
-                    setTxError(e.message);
+                    setTxError(e.data.message);
                 });
         }
     };
