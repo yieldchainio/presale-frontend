@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Contracts, ContributionTokens } from "../constants";
+import { CHAINS, Contracts, ContributionTokens, JURISDICTIONS } from "../constants";
 import { useWeb3Context } from "../hooks/useWeb3Context";
 import { Presale as TPresale } from "../typechain/Presale";
 import { Presale__factory } from "../typechain/factories/Presale__factory";
@@ -74,11 +74,14 @@ const Presale = () => {
                 await tx.wait();
                 getAllowance();
             } catch (e: any) {
-                console.log(e);
+                console.log("Err", e);
                 setTxError(e!.message);
+                setTxRunning(false);
+                throw e;
+                
             }
-            setTxRunning(false);
         }
+        setTxRunning(false);
     };
 
     const openLegalsModal = () => {
@@ -86,13 +89,18 @@ const Presale = () => {
     };
 
     const contribute = async () => {
+        setTxError("");
         if (presaleContract !== undefined && provider !== null) {
             if (amount == 0) {
-                console.log("Amount 0");
+                setTxError("Contribution too low");
                 return;
             }
             if (allowance < amount) {
-                await approve();
+                try {
+                    await approve();
+                } catch {
+                    return;
+                }
             }
 
             setTxRunning(true);
@@ -113,7 +121,7 @@ const Presale = () => {
                 .catch((e: any) => {
                     console.log(e);
                     setTxRunning(false);
-                    setTxError(e.message);
+                    setTxError(e.data.message);
                 });
         }
     };
@@ -161,47 +169,6 @@ const Presale = () => {
         getAllowance();
     }, [tokenContract]);
 
-    // TODO: This probably could be loaded from some place other than here
-    const jurisdictions = [
-        "United States of America (including its territories)",
-        "Canada",
-        "Democratic People’s Republic of Korea",
-        "Cuba",
-        "Syria",
-        "Iran",
-        "Crimea",
-        "People’s Republic of China",
-        "Bahamas",
-        "Belarus",
-        "Botswana",
-        "Burundi",
-        "Cambodia",
-        "Central African Republic",
-        "The Democratic Republic of the Congo",
-        "Côte d’Ivoire",
-        "Ethiopia",
-        "Ghana",
-        "Islamic Republic of Iran",
-        "Iraq",
-        "Lebanon",
-        "Libya",
-        "Mali",
-        "Myanmar",
-        "Nicaragua",
-        "Pakistan",
-        "Panama",
-        "Somalia",
-        "South Sudan",
-        "Sri Lanka",
-        "Sudan",
-        "Syrian Arab Republic",
-        "Trinidad and Tobago",
-        "Tunisia",
-        "Bolivarian Republic of Venezuela",
-        "Yemen",
-        "Zimbabwe",
-    ].sort();
-
     return (
         <div>
             <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -215,7 +182,7 @@ const Presale = () => {
                             columnCount: 3,
                         }}
                     >
-                        {jurisdictions.map((j, i) => (
+                        {JURISDICTIONS.map((j, i) => (
                             <span key={j} className={i % 2 === 0 ? "" : "odd"}>
                                 {j}
                                 <br />
@@ -236,7 +203,7 @@ const Presale = () => {
             <div className="border-outer">
                 <div className="border-inner">
                     <div className="presale-container">
-                        {!Contracts[chainId!] ? (
+                        { !(CHAINS.includes(chainId!)) || !Contracts[chainId!] ? (
                             connected ? (
                                 <div>Unsupported network ({chainId!})</div>
                             ) : (
