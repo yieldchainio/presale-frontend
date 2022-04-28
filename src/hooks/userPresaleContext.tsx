@@ -8,6 +8,7 @@ import useInterval from "./useInterval"
 export type PresaleInfo = {
     raised: number;
     hardCap: number;
+    maxContribution: number;
     open: boolean | null;
     raisedPerChain: number[];
     reload: () => void;
@@ -46,8 +47,9 @@ export const PresaleContextProvider = ({ children }: Props) => {
     const [openPerChain, setOpenPerChain] = useState<boolean[]>(new Array(CHAINS.length).fill(false));
     const [raised, setRaised] = useState(NaN);
     const [raisedPerChain, setRaisedPerChain] = useState<number[]>(new Array(CHAINS.length).fill(0));
-    const [hardCap, setHardCap] = useState(30000);
+    const [hardCap, setHardCap] = useState(0);
     const [reloadCnt, setReload] = useState(0);
+    const [maxContribution, setMaxContribution] = useState(0);
 
 
     const reload = () => {
@@ -74,9 +76,18 @@ export const PresaleContextProvider = ({ children }: Props) => {
                 setRaisedPerChain(_raisedPerChain)
                 setRaised(_raisedPerChain.reduce((x, y) => y+x))
             });
-            
+            contract.maxContribution().then((max) => {
+                setMaxContribution(parseFloat(ethers.utils.formatEther(max)));
+            })
+            if (capSynced === 0) {
+                contract.maxContribution().then((max) => {
+                    setMaxContribution(parseFloat(ethers.utils.formatEther(max)));
+                })
+                contract.HARD_CAP().then((cap) => {
+                    setHardCap(parseFloat(ethers.utils.formatEther(cap)));
+                })
+            }
         }
-        setHardCap(capSynced);
     }
 
     useEffect(() => {
@@ -90,12 +101,14 @@ export const PresaleContextProvider = ({ children }: Props) => {
         raised,
         hardCap,
         open,
+        maxContribution,
         raisedPerChain,
         reload,
     }), [
         raised,
         hardCap,
         open,
+        maxContribution,
         raisedPerChain,
         reload,
     ])
