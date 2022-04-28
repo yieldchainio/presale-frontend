@@ -1,44 +1,16 @@
 import { useEffect, useState } from "react";
 import { Presale } from "../typechain/Presale";
 import { Presale__factory } from "../typechain/factories/Presale__factory";
-import { Contracts } from "../constants";
+import { Contracts, TOTAL_RAISE } from "../constants";
 import { useWeb3Context } from "../hooks/useWeb3Context";
 import { ethers } from "ethers";
+import { usePresaleContext } from "../hooks/userPresaleContext";
 
 const Details = () => {
     const { chainId, provider, connected } = useWeb3Context();
-    const [hardCap, setHardCap] = useState("");
-    const [maxContrib, setMaxContrib] = useState("");
+    const { maxContribution, hardCap} = usePresaleContext();
 
     const getInfo = async () => {};
-
-    useEffect(() => {
-        if (connected && provider && chainId && Contracts[chainId!]) {
-            console.log(chainId!);
-            const presaleContract: Presale = Presale__factory.connect(
-                Contracts[chainId!].PRESALE,
-                provider!.getSigner()
-            );
-            presaleContract
-                .HARD_CAP()
-                .then((value) =>
-                    setHardCap(
-                        parseInt(
-                            ethers.utils.formatEther(value)
-                        ).toLocaleString()
-                    )
-                );
-            presaleContract
-                .maxContribution()
-                .then((value) =>
-                    setMaxContrib(
-                        parseInt(
-                            ethers.utils.formatEther(value)
-                        ).toLocaleString()
-                    )
-                );
-        }
-    }, [connected, chainId, provider]);
 
     return (
         <div className="details-container">
@@ -55,11 +27,11 @@ const Details = () => {
                 </li>
                 <li>
                     Maximal contribution
-                    <span className="details-value">${maxContrib}</span>
+                    <span className="details-value">${maxContribution.toLocaleString()}</span>
                 </li>
                 <li>
                     Total raise size
-                    <span className="details-value">${hardCap}</span>
+                    <span className="details-value">${hardCap.toLocaleString()}</span>
                 </li>
                 <li>
                     Total supply
