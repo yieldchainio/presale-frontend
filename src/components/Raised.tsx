@@ -1,6 +1,12 @@
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import { CHAINS, Contracts, Explorers, Networks, TOTAL_RAISE } from "../constants";
+import {
+    CHAINS,
+    Contracts,
+    Explorers,
+    Networks,
+    TOTAL_RAISE,
+} from "../constants";
 import { usePresaleContext } from "../hooks/userPresaleContext";
 import { useWeb3Context } from "../hooks/useWeb3Context";
 import { Presale__factory } from "../typechain/factories/Presale__factory";
@@ -10,6 +16,14 @@ const Raised = () => {
     const { connected, chainId, provider } = useWeb3Context();
     const { raised, raisedPerChain, hardCap } = usePresaleContext();
     const [showDetails, setShowDetails] = useState(false);
+
+    const truncate = (n: number, decimals: number) =>
+        Math.trunc(n * 10 ** decimals) / 10 ** decimals;
+
+    const calcBarRatio = (v: number) => {
+        const ratio = (v * 100) / raised;
+        return ratio <= 4 ? 4 : ratio;
+    };
     // const [raised, setRaised] = useState(NaN);
 
     /*useEffect(() => {
@@ -27,7 +41,7 @@ const Raised = () => {
             <br />
             <div className="raised-amounts">
                 <span className="raised-current">
-                    ${raised.toLocaleString()} /{" "}
+                    ${truncate(raised, 1).toLocaleString()} /{" "}
                 </span>
                 <span className="raised-total">
                     ${TOTAL_RAISE.toLocaleString()}
@@ -64,11 +78,20 @@ const Raised = () => {
                             <div
                                 className="progress-bar"
                                 style={{
-                                    width: `${(v * 100) / raised}%`,
+                                    width: `${calcBarRatio(v)}%`,
                                 }}
                             ></div>
-                            <span>${v.toLocaleString() + " "}</span>
-                            <a href={`${Explorers[CHAINS[i]]}address/${Contracts[CHAINS[i]].PRESALE}`} target="_blank">{Networks[CHAINS[i]]}</a>
+                            <span>
+                                ${truncate(v, 1).toLocaleString() + " "}
+                            </span>
+                            <a
+                                href={`${Explorers[CHAINS[i]]}address/${
+                                    Contracts[CHAINS[i]].PRESALE
+                                }`}
+                                target="_blank"
+                            >
+                                {Networks[CHAINS[i]]}
+                            </a>
                         </li>
                     ))}
                 </ul>
