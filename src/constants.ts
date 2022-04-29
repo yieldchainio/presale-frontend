@@ -12,10 +12,13 @@ export enum ChainID {
 
     FTM = 250,
     FTM_TESTNET = 4002,
+
+    TELOS = 40,
+    TELOS_TESTNET = 41,
 }
 
-//export const CHAINS = [ChainID.BSC_TESTNET, ChainID.AVAX_TESTNET, ChainID.FTM_TESTNET, ChainID.POLY_TESTNET];
-export const CHAINS = [ChainID.BSC, ChainID.AVAX, ChainID.FTM, ChainID.POLY];
+//export const CHAINS = [ChainID.BSC_TESTNET, ChainID.AVAX_TESTNET, ChainID.FTM_TESTNET, ChainID.POLY_TESTNET, ChainID.TELOS_TESTNET];
+export const CHAINS = [ChainID.BSC, ChainID.AVAX, ChainID.FTM, ChainID.POLY, ChainID.TELOS];
 
 
 interface IContracts {
@@ -69,6 +72,16 @@ export const Contracts:IContracts = {
         USDT : "0x049d68029688eabf473097a2fc38ef61633a3c7a",
         USDC : "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     },
+    [ChainID.TELOS_TESTNET] : {
+        PRESALE: "0x287156c447A0881ca7143e72b67550B211310129",
+        USDT : "0xa3df9A01b423E7C1C501314720b47d6145951256",
+        USDC : "0xb98e0f7d9Cd41e11121D10D535b28B60261e5e6F",
+    },
+    [ChainID.TELOS] : {
+        PRESALE: "0xb98e0f7d9Cd41e11121D10D535b28B60261e5e6F",
+        USDT : "0xefaeee334f0fd1712f9a8cc375f427d9cdd40d73",
+        USDC : "0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b",
+    },
 }
 
 interface IContributionTokens {
@@ -83,6 +96,8 @@ export const ContributionTokens:IContributionTokens = {
     [ChainID.POLY]: ["USDT", "USDC", "BUSD"],
     [ChainID.AVAX]: ["USDT", "USDC", "BUSD"],
     [ChainID.FTM]: ["USDT", "USDC"],
+    [ChainID.TELOS_TESTNET] : ["USDT", "USDC"],
+    [ChainID.TELOS] : ["USDT", "USDC"],
 }
 
 interface IRpcUrls {
@@ -98,6 +113,8 @@ export const RpcUrls:IRpcUrls = {
     [ChainID.POLY]: 'https://polygon-rpc.com/',
     [ChainID.FTM_TESTNET]: 'https://rpc.testnet.fantom.network/',
     [ChainID.FTM]: 'https://rpcapi.fantom.network/',
+    [ChainID.TELOS_TESTNET]: "https://testnet.telos.net/evm",
+    [ChainID.TELOS] : "https://mainnet.telos.net/evm",
 
 }
 
@@ -110,6 +127,8 @@ export const Networks:IRpcUrls = {
     [ChainID.AVAX] : "Avalanche",
     [ChainID.FTM_TESTNET] : "FTM Testnet",
     [ChainID.FTM] : "Fantom",
+    [ChainID.TELOS_TESTNET] : "Telos Testnet",
+    [ChainID.TELOS] : "Telos",
 }
 
 export const Explorers:IRpcUrls = {
@@ -121,6 +140,8 @@ export const Explorers:IRpcUrls = {
     [ChainID.AVAX] : "https://snowtrace.io/",
     [ChainID.FTM_TESTNET] : "https://testnet.ftmscan.com/",
     [ChainID.FTM]: "https://ftmscan.com/",
+    [ChainID.TELOS_TESTNET]: "https://testnet.teloscan.io/",
+    [ChainID.TELOS]: "https://www.teloscan.io/"
 }
 
 export const DEFAULT_CHAIN = ChainID.BSC_TESTNET;
