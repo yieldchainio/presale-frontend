@@ -34,7 +34,7 @@ const Details = () => {
                     <span className="details-value">${hardCap.toLocaleString()}</span>
                 </li>
                 <li>
-                    Total supply
+                    Tokens allocated for pre-seed round:
                     <span className="details-value">1,333,333</span>
                 </li>
                 <div className="details-vesting">
