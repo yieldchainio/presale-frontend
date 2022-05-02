@@ -156,11 +156,11 @@ const Presale = () => {
                 token,
                 provider!.getSigner()
             );
-            setTokenContract(tc);
             tc.decimals().then((d) => {
                 setDecimals(d);
                 tc.balanceOf(address).then((v) => {
                     setBalance(parseFloat(ethers.utils.formatUnits(v, d)));
+                    setTokenContract(tc);
                 });
             })
 
